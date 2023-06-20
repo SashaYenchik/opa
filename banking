@@ -1,0 +1,82 @@
+class BankAccount:
+    def __init__(self, account_number, initial_balance=0):
+        self.account_number = account_number
+        self.balance = initial_balance
+
+    def deposit(self, amount):
+        if amount > 0:
+            self.balance += amount
+            print(f"Deposited {amount} into Account {self.account_number}.")
+        else:
+            print("Invalid deposit amount.")
+
+    def withdraw(self, amount):
+        if amount > 0:
+            if amount <= self.balance:
+                self.balance -= amount
+                print(f"Withdrew {amount} from Account {self.account_number}.")
+            else:
+                print("Insufficient balance.")
+        else:
+            print("Invalid withdrawal amount.")
+
+    def check_balance(self):
+        print(f"Account {self.account_number} balance: {self.balance}")
+
+
+def create_account():
+    account_number = input("Enter the account number: ")
+    initial_balance = float(input("Enter the initial balance: "))
+    account = BankAccount(account_number, initial_balance)
+    print(f"Account {account_number} created successfully.")
+
+    return account
+
+
+def menu():
+    accounts = {}
+
+    while True:
+        print("\nBanking System")
+        print("1. Create Account")
+        print("2. Deposit")
+        print("3. Withdraw")
+        print("4. Check Balance")
+        print("5. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            account = create_account()
+            accounts[account.account_number] = account
+        elif choice == "2":
+            account_number = input("Enter the account number: ")
+            amount = float(input("Enter the deposit amount: "))
+            if account_number in accounts:
+                account = accounts[account_number]
+                account.deposit(amount)
+            else:
+                print("Invalid account number.")
+        elif choice == "3":
+            account_number = input("Enter the account number: ")
+            amount = float(input("Enter the withdrawal amount: "))
+            if account_number in accounts:
+                account = accounts[account_number]
+                account.withdraw(amount)
+            else:
+                print("Invalid account number.")
+        elif choice == "4":
+            account_number = input("Enter the account number: ")
+            if account_number in accounts:
+                account = accounts[account_number]
+                account.check_balance()
+            else:
+                print("Invalid account number.")
+        elif choice == "5":
+            print("Thank you for using the Banking System. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+
+menu()
